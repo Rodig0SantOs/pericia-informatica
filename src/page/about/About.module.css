@@ -1,0 +1,9 @@
+.background {
+  background-image: url("../../image/background_listServerce_1.png");
+  background-repeat: no-repeat;
+  width: 100%;
+
+  /* Responsivo por padrão */
+  display: flex;
+  align-items: center;
+}

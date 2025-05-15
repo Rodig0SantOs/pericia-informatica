@@ -1,0 +1,28 @@
+.backgroundCTA {
+    background-image: url('../../../image/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 96px; /* espaço para o header fixo */
+  
+    /* Responsivo por padrão */
+    display: flex;
+    align-items: center;
+  }
+  
+  @media (max-width: 768px) {
+    .backgroundCTA {
+      background-position: top;
+      padding-top: 80px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .backgroundCTA {
+      padding-top: 72px;
+      background-size: auto 100%;
+    }
+  }
+  

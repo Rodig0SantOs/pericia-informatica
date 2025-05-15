@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*,
+:after,
+:before {
+  box-sizing: border-box;
+}
+
+:root {
+  /* font */
+  --font-title: "Montserrat", sans-serif;
+  --font-text: "Lato", sans-serif;
+
+  /* title subtitle Colors*/
+  --title-emphasis: #f2f2f0; /* Color do titulo de destaque */
+  --subtitle-emphasis: #9fbe92; /* text color primário */
+
+  /* Text */
+  --text-primary: #272727; /* text color primário */
+  --text-secondary: #f2f2f0; /* text color secundário */
+  --text-tertiary: #858585;
+
+  /* Colors */
+  --background-CTA: #272727;
+
+  /* Blocks */
+  --background-Block-primary: #e7e8e3;
+  --background-Block-secondary: #99b88c;
+
+  /* Button */
+  --background-Button-primary: #9fbe92;
+  --background-Button-secondary: #e7e8e3;
+}
+
+/* body {
+  max-width: 1200px;
+  margin: 0 auto;
+} */
+
+.container-main {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0 20px; /* Para dar um pouco de espaço lateral em telas menores */
+}
+
+/* Estilos para telas com largura até 1024px (por exemplo, tablets) */
+@media (max-width: 1024px) {
+  .container-main {
+    max-width: 90%; /* Reduz um pouco a largura */
+  }
+}
+
+/* Estilos para telas com largura até 768px (por exemplo, celulares grandes) */
+@media (max-width: 768px) {
+  .container-main {
+    max-width: 95%;
+  }
+}
+
+/* Estilos para telas muito pequenas (por exemplo, celulares pequenos) */
+@media (min-width: 480px) {
+  .container-main {
+    max-width: 83%;
+    padding: 0 10px;
+  }
+}
+
+
+.container-minMain {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}

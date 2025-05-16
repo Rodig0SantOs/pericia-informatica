@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import Cors from "cors";
 
@@ -16,36 +17,27 @@ function runMiddleware(req, res, fn) {
 }
 
 export default async function handler(req, res) {
-  await runMiddleware(req, res, cors);
   if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).end(`Method ${req.method} Not Allowed`);
+    return res.status(405).json({ error: "Método não permitido" });
   }
 
   try {
-    const {
-      host_smtp,
-      usuario_smtp,
-      senha_smtp,
-      emailRemetente,
-      nomeRemetente,
-      destinatario,
-      assunto,
-      mensagem,
-    } = req.body;
+    const { name, email, assunto, message } = req.body;
 
-    // Aqui você implementaria o envio real usando Nodemailer, SendGrid, etc.
-    console.log("Dados recebidos:", {
-      host_smtp,
-      usuario_smtp,
-      destinatario,
-      assunto,
-    });
+    // Configurações pegas do .env (sem NEXT_PUBLIC_)
+    const transport = {
+      host: process.env.MAILGRID_HOST,
+      auth: {
+        user: process.env.MAILGRID_USER,
+        pass: process.env.MAILGRID_PASSWORD,
+      },
+    };
 
-    // Simulando um envio bem-sucedido
+    // Aqui implementaria o envio real com Nodemailer
+    console.log("Enviando email:", { name, email });
+
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Erro no servidor:", error);
-    return res.status(500).json({ error: "Erro interno no servidor" });
+    return res.status(500).json({ error: error.message });
   }
 }

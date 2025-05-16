@@ -2,9 +2,9 @@
 const mailGridService = async (formData) => {
   /* verificar se as variáveis necessárias estão definidas */
   if (
-    !process.env.VITE_MAILGRID_USER ||
-    !process.env.VITE_MAILGRID_PASSWORD ||
-    !process.env.VITE_MAILGRID_AUTHORIZATION
+    !process.env.NEXT_PUBLIC_MAILGRID_USER ||
+    !process.env.NEXT_PUBLIC_MAILGRID_PASSWORD ||
+    !process.env.NEXT_PUBLIC_MAILGRID_AUTHORIZATION
   ) {
     throw new Error("Configurações de e-mail não estão definidas corretamente");
   }
@@ -34,14 +34,14 @@ const mailGridService = async (formData) => {
   `;
 
   const requestData = {
-    host_smtp: import.meta.env.VITE_MAILGRID_HOST,
-    usuario_smtp: import.meta.env.VITE_MAILGRID_USER,
-    senha_smtp: import.meta.env.VITE_MAILGRID_PASSWORD,
-    emailRemetente: import.meta.env.VITE_MAILGRID_FROM_EMAIL,
-    nomeRemetente: import.meta.env.VITE_MAILGRID_FROM_NAME,
-    destinatario: import.meta.env.VITE_MAILGRID_FROM_EMAIL,
+    host_smtp: import.meta.env.NEXT_PUBLIC_MAILGRID_HOST,
+    usuario_smtp: import.meta.env.NEXT_PUBLIC_MAILGRID_USER,
+    senha_smtp: import.meta.env.NEXT_PUBLIC_MAILGRID_PASSWORD,
+    emailRemetente: import.meta.env.NEXT_PUBLIC_MAILGRID_FROM_EMAIL,
+    nomeRemetente: import.meta.env.NEXT_PUBLIC_MAILGRID_FROM_NAME,
+    destinatario: import.meta.env.NEXT_PUBLIC_MAILGRID_FROM_EMAIL,
     assunto: `Novo contato: ${formData.assunto}`,
-    token: import.meta.env.VITE_MAILGRID_AUTHORIZATION,
+    token: import.meta.env.NEXT_PUBLIC_MAILGRID_AUTHORIZATION,
     mensagem: htmlMessage,
     mensagemAlt: `Novo contato de ${formData.name} (${formData.email}): ${formData.message}`,
     mensagemTipo: "html",

@@ -73,6 +73,10 @@ const Contact = () => {
                 id="name"
                 className="w-full border border-gray-300 rounded-md p-2"
                 placeholder="Seu nome"
+                value={formData.name}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
               />
             </div>
             <div>
@@ -84,6 +88,10 @@ const Contact = () => {
                 id="email"
                 className="w-full border border-gray-300 rounded-md p-2"
                 placeholder="seu@email.com"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
             </div>
             <div>
@@ -95,6 +103,10 @@ const Contact = () => {
                 id="assunto"
                 className="w-full border border-gray-300 rounded-md p-2"
                 placeholder="Digite o assunto"
+                value={formData.assunto}
+                onChange={(e) =>
+                  setFormData({ ...formData, assunto: e.target.value })
+                }
               />
             </div>
             <div>
@@ -105,6 +117,10 @@ const Contact = () => {
                 id="message"
                 className="w-full border border-gray-300 rounded-md p-2 h-32"
                 placeholder="Escreva sua mensagem..."
+                value={formData.message}
+                onChange={(e) =>
+                  setFormData({ ...formData, message: e.target.value })
+                }
               />
             </div>
             <button
@@ -114,9 +130,12 @@ const Contact = () => {
             >
               enviar
             </button>
+            {messageStatus === "success" && (
+              <div className="text-green-600">Enviado com sucesso!</div>
+            )}
             {messageStatus === "error" && (
-              <div>
-                <h1>Enviado com sucesso!</h1>
+              <div className="text-red-600">
+                Erro ao enviar. Tente novamente.
               </div>
             )}
           </form>

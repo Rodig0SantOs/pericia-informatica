@@ -49,7 +49,7 @@ const mailGridService = async (formData) => {
   };
 
   try {
-    const response = await fetch("https://api.mailgrid.com.br/send", {
+    const response = await fetch("/api/sendMail", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(requestData),

@@ -1,9 +1,10 @@
+/* eslint-disable no-undef */
 const mailGridService = async (formData) => {
   /* verificar se as variáveis necessárias estão definidas */
   if (
-    !import.meta.env.VITE_MAILGRID_USER ||
-    !import.meta.env.VITE_MAILGRID_PASSWORD ||
-    !import.meta.env.VITE_MAILGRID_AUTHORIZATION
+    !process.env.VITE_MAILGRID_USER ||
+    !process.env.VITE_MAILGRID_PASSWORD ||
+    !process.env.VITE_MAILGRID_AUTHORIZATION
   ) {
     throw new Error("Configurações de e-mail não estão definidas corretamente");
   }
@@ -49,11 +50,14 @@ const mailGridService = async (formData) => {
   };
 
   try {
-    const response = await fetch("/api/sendMail", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestData),
-    });
+    const response = await fetch(
+      "https://pericia-informatica.vercel.app/api/sendMail", // URL completo
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(requestData),
+      }
+    );
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));

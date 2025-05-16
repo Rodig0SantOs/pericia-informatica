@@ -19,15 +19,20 @@ const Contact = () => {
     try {
       const response = await fetch("/api/sendMail", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData), // Envia apenas dados do formulário
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) throw new Error("Falha no envio");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       setMessageStatus("success");
       setFormData({ name: "", email: "", assunto: "", message: "" });
     } catch (error) {
+      console.error("Erro no envio:", error);
       setMessageStatus("error");
     } finally {
       setIsSending(false);

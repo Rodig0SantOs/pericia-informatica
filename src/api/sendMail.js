@@ -2,32 +2,39 @@
 import Cors from "cors";
 import nodemailer from "nodemailer";
 
-// Configura CORS corretamente
+// Configuração correta do CORS
 const cors = Cors({
-  methods: ["POST"],
-  origin: ["https://pericia-informatica.vercel.app"], // Sem barra no final
+  methods: ["POST", "OPTIONS"], // Adicione OPTIONS para preflight
+  origin: [
+    "https://pericia-informatica.vercel.app",
+    "http://localhost:3000", // Para desenvolvimento
+  ],
 });
 
-async function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
+export default async function handler(req, res) {
+  // Executa o middleware CORS
+  await new Promise((resolve, reject) => {
+    cors(req, res, (result) => {
       if (result instanceof Error) return reject(result);
       return resolve(result);
     });
   });
-}
 
-export default async function handler(req, res) {
-  await runMiddleware(req, res, cors);
+  // Responde imediatamente para requisições OPTIONS (preflight)
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
 
+  // Verifica o método
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Método não permitido" });
+    res.setHeader("Allow", ["POST"]);
+    return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
   }
 
   try {
     const { name, email, assunto, message } = req.body;
 
-    // Configura o transporter com credenciais do .env (NÃO use NEXT_PUBLIC_)
+    // Configure seu transporter de e-mail
     const transporter = nodemailer.createTransport({
       host: process.env.MAILGRID_HOST,
       port: 587,
@@ -38,11 +45,11 @@ export default async function handler(req, res) {
       },
     });
 
-    // Envia o e-mail
+    // Envie o e-mail
     await transporter.sendMail({
-      from: `"${process.env.MAILGRID_FROM_NAME}" <${process.env.MAILGRID_FROM_EMAIL}>`,
-      to: process.env.MAILGRID_TO_EMAIL, // Definir no .env
-      subject: `Novo contato: ${assunto}`,
+      from: `"${name}" <${process.env.MAILGRID_FROM_EMAIL}>`,
+      to: process.env.MAILGRID_TO_EMAIL,
+      subject: assunto,
       html: `
         <h2>Novo contato de ${name}</h2>
         <p><strong>Email:</strong> ${email}</p>
@@ -52,7 +59,7 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error("Erro no servidor:", error);
-    return res.status(500).json({ error: "Falha ao enviar e-mail" });
+    console.error("Erro no envio:", error);
+    return res.status(500).json({ error: "Erro ao enviar mensagem" });
   }
 }

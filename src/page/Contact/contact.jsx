@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import mailGridService from "../../utils/mailGridService";
 
@@ -13,26 +14,23 @@ const Contact = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    if (isSending) return;
-
     setIsSending(true);
-    setMessageStatus(null);
 
     try {
-      await mailGridService(formData);
-      setMessageStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        assunto: "",
-        message: "",
+      const response = await fetch("/api/sendMail", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData), // Envia apenas dados do formulário
       });
+
+      if (!response.ok) throw new Error("Falha no envio");
+
+      setMessageStatus("success");
+      setFormData({ name: "", email: "", assunto: "", message: "" });
     } catch (error) {
-      console.error("Erro detalhado no envio:", error);
       setMessageStatus("error");
     } finally {
       setIsSending(false);
-      setTimeout(() => setMessageStatus(null), 5000);
     }
   };
 

@@ -1,6 +1,4 @@
-/* eslint-disable no-unused-vars */
 import { useState } from "react";
-import mailGridService from "../../utils/mailGridService";
 
 const Contact = () => {
   const [isSending, setIsSending] = useState(false);

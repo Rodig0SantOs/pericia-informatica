@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { useState } from "react";
 
 const Contact = () => {
@@ -11,31 +12,29 @@ const Contact = () => {
   });
 
   const handleSubmitForm = async (e) => {
-    e.preventDefault();
-    setIsSending(true);
+  e.preventDefault();
+  setIsSending(true);
 
-    try {
-      const response = await fetch("/api/sendMail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+  try {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/send-mail`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      setMessageStatus("success");
-      setFormData({ name: "", email: "", assunto: "", message: "" });
-    } catch (error) {
-      console.error("Erro no envio:", error);
-      setMessageStatus("error");
-    } finally {
-      setIsSending(false);
+    if (!response.ok) {
+      throw new Error(`Erro: ${response.status}`);
     }
-  };
+
+    setMessageStatus("success");
+    setFormData({ name: "", email: "", assunto: "", message: "" });
+  } catch (error) {
+    console.error("Erro no envio:", error);
+    setMessageStatus("error");
+  } finally {
+    setIsSending(false);
+  }
+};
 
   return (
     <section className="text-text-primary py-36 max-w-5xl mx-auto px-4">

@@ -13,6 +13,12 @@ const ListServicos = [
     description:
       "Já utilizei vários serviços parecidos, mas nenhum chegou perto da eficiência e cuidado que encontrei aqui. A equipe foi transparente em todas as etapas, explicou tudo detalhadamente e ainda sugeriu melhorias que nem eu havia pensado. Hoje me sinto muito mais seguro e satisfeito. Parabéns pelo trabalho!",
   },
+  {
+    name: "Carlos M.",
+    data: 2022,
+    description:
+      "Já utilizei vários serviços parecidos, mas nenhum chegou perto da eficiência e cuidado que encontrei aqui. A equipe foi transparente em todas as etapas, explicou tudo detalhadamente e ainda sugeriu melhorias que nem eu havia pensado. Hoje me sinto muito mais seguro e satisfeito. Parabéns pelo trabalho!",
+  },
 ];
 
 export default ListServicos;

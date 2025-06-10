@@ -15,7 +15,7 @@ const Contact = () => {
     setIsSending(true);
 
     try {
-      const response = await fetch("/api/sendMail", {
+      const response = await fetch("https://stwbrasil.com/api/sendMail", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

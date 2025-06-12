@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./callActionMain.module.css";
 
 const CallActionMain = () => {
+  const navigate = useNavigate();
+
+  const handleContactClick = () => {
+    navigate("/contato");
+  };
+
   return (
     <section className={`${styles.backgroundCTA}`}>
       <section className="container-main pt-20 w-full text-text-primary">
@@ -24,7 +31,10 @@ const CallActionMain = () => {
           </p>
         </div>
 
-        <button className="bg-green-400 text-text-primary font-bold text-xl my-6 py-3 px-20 rounded font-text sm:hover:bg-green-500">
+        <button
+          className="bg-green-400 text-text-primary font-bold text-xl my-6 py-3 px-20 rounded font-text sm:hover:bg-green-500"
+          onClick={handleContactClick}
+        >
           Contato
         </button>
       </section>

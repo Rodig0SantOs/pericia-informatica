@@ -1,4 +1,5 @@
 import { useState } from "react";
+import mailGridService from "../../utils/mailGridService";
 
 const Contact = () => {
   const [isSending, setIsSending] = useState(false);
@@ -14,27 +15,9 @@ const Contact = () => {
     e.preventDefault();
     setIsSending(true);
 
-    try {
-      const response = await fetch("https://stwbrasil.com/api/sendMail", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      setMessageStatus("success");
-      setFormData({ name: "", email: "", assunto: "", message: "" });
-    } catch (error) {
-      console.error("Erro no envio:", error);
-      setMessageStatus("error");
-    } finally {
-      setIsSending(false);
-    }
+    await mailGridService(formData);
+    setIsSending(false);
+    setMessageStatus("success");
   };
 
   return (
